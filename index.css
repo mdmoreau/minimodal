@@ -42,6 +42,25 @@
   transform: translateY(-50%);
 }
 
+.minimodal__element--video {
+  max-width: calc(100vh * (16/9));
+}
+
+.minimodal__element--video::before {
+  display: block;
+  padding-bottom: 56.25%;
+  background: black;
+  content: '';
+}
+
+.minimodal__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .minimodal__close {
   position: absolute;
   top: 0;
