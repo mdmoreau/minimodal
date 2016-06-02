@@ -1,0 +1,30 @@
+{
+  "name": "minimodal",
+  "version": "0.1.0",
+  "description": "Minimal, customizable, responsive modals",
+  "main": "index.js",
+  "style": "index.css",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "browser-sync start -s -f 'index.html' 'index.css' 'index.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdmoreau/minimodal.git"
+  },
+  "keywords": [
+    "modal",
+    "minimal",
+    "customizable",
+    "responsive"
+  ],
+  "author": "mdmoreau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mdmoreau/minimodal/issues"
+  },
+  "homepage": "https://github.com/mdmoreau/minimodal#readme",
+  "devDependencies": {
+    "browser-sync": "^2.12.8"
+  }
+}

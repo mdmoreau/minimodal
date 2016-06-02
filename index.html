@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <title>minimodal</title>
+    <link href="index.css" rel="stylesheet">
+  </head>
+  <body>
+    <h1>minimodal</h1>
+    <h2>single image</h2>
+    <ul>
+      <li><a href="//placehold.it/600" data-minimodal>image</a></li>
+    </ul>
+    <script src="index.js"></script>
+    <script>
+      var targets = document.querySelectorAll('[data-minimodal]');
+      for (var i = 0; i < targets.length; i += 1) {
+        targets[i].addEventListener('click', function(e) {
+          e.preventDefault();
+          var modal = minimodal(this);
+          modal.open();
+        });
+      }
+    </script>
+  </body>
+</html>
