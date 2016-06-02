@@ -11,7 +11,7 @@ function minimodal(target) {
   };
 
   _.setup = function() {
-    _.minimodal = _.node('<div class="minimodal">');
+    _.minimodal = _.node('<div class="minimodal" tabindex="0">');
     _.overlay = _.node('<div class="minimodal__overlay">');
     _.viewport = _.node('<div class="minimodal__viewport">');
     _.closeButton = _.node('<button class="minimodal__close">Close</button>');
@@ -22,14 +22,40 @@ function minimodal(target) {
     _.minimodal.appendChild(_.viewport);
     _.minimodal.appendChild(_.closeButton);
     document.body.appendChild(_.minimodal);
+    _.minimodal.focus();
   };
 
   _.close = function() {
     _.minimodal.parentNode.removeChild(_.minimodal);
+    document.removeEventListener('keydown', _.keydown);
+    target.focus();
+  };
+
+  _.focusTrap = function(e) {
+    if (e.shiftKey) {
+      if (_.minimodal === document.activeElement) {
+        e.preventDefault();
+        _.closeButton.focus();
+      }
+    } else {
+      if (_.closeButton === document.activeElement) {
+        e.preventDefault();
+        _.minimodal.focus();
+      }
+    }
+  };
+
+  _.keydown = function(e) {
+    if (e.keyCode === 9) {
+      _.focusTrap(e);
+    } else if (e.keyCode === 27) {
+      _.close();
+    }
   };
 
   _.listen = function() {
     _.closeButton.addEventListener('click', _.close);
+    document.addEventListener('keydown', _.keydown);
   };
 
   _.youtube = function() {
