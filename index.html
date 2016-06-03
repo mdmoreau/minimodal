@@ -7,28 +7,50 @@
     <title>minimodal</title>
     <link href="index.css" rel="stylesheet">
     <style>
+      /* minimodal */
       .minimodal {
-        opacity: 0;
         transition: all 600ms ease;
+        opacity: 0;
       }
       .minimodal--active {
         opacity: 1;
       }
+      /* status */
       .minimodal__status {
-        opacity: 0;
         transition: all 600ms ease;
+        opacity: 0;
       }
-      .minimodal--active .minimodal__item--loading .minimodal__status {
+      .minimodal__item--loading .minimodal__status {
         opacity: 1;
       }
+      /* content */
       .minimodal__content {
-        opacity: 0;
         transform: scale(0.5);
         transition: all 600ms ease;
+        opacity: 0;
       }
-      .minimodal--active .minimodal__item--loaded .minimodal__content {
+      .minimodal__item--loaded .minimodal__content {
+        transform: none;
         opacity: 1;
-        transform: scale(1);
+      }
+      /* item */
+      .minimodal__item {
+        transition: all 600ms ease;
+      }
+      /* item added, removed */
+      .minimodal__item--added,
+      .minimodal__item--removed {
+        opacity: 0;
+      }
+      /* item added previous, removed next */
+      .minimodal__item--added--previous,
+      .minimodal__item--removed--next {
+        transform: translateX(-100%) scale(0.5);
+      }
+      /* item added next, removed previous */
+      .minimodal__item--added--next,
+      .minimodal__item--removed--previous {
+        transform: translateX(100%) scale(0.5);
       }
     </style>
   </head>
@@ -46,6 +68,18 @@
     <ul>
       <li><a href="https://vimeo.com/7809605" data-minimodal>vimeo</a></li>
     </ul>
+    <h2>group 1</h2>
+    <ul>
+      <li><a href="https://placehold.it/600?text=1-1" data-minimodal="1">image</a></li>
+      <li><a href="https://placehold.it/600/aaa?text=1-2" data-minimodal="1">image</a></li>
+      <li><a href="https://placehold.it/600/eee?text=1-3" data-minimodal="1">image</a></li>
+    </ul>
+    <h2>group 2</h2>
+    <ul>
+      <li><a href="https://placehold.it/600?text=2-1" data-minimodal="2">image</a></li>
+      <li><a href="https://www.youtube.com/watch?v=Cp-Ys_iFwnM" data-minimodal="2">youtube</a></li>
+      <li><a href="https://vimeo.com/7809605" data-minimodal="2">vimeo</a></li>
+    </ul>
     <h2>error</h2>
     <ul>
       <li><a href="error.jpg" data-minimodal>error</a></li>
@@ -58,7 +92,8 @@
           e.preventDefault();
           var modal = minimodal(this, {
             closeTimeout: 600,
-            statusTimeout: 600
+            statusTimeout: 600,
+            removeTimeout: 600
           });
           modal.open();
         });

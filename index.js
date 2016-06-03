@@ -8,7 +8,8 @@ function minimodal(target, options) {
 
   _.options = {
     closeTimeout: typeof options.closeTimeout !== 'undefined' ? options.closeTimeout : 0,
-    statusTimeout: typeof options.statusTimeout !== 'undefined' ? options.statusTimeout : 0
+    statusTimeout: typeof options.statusTimeout !== 'undefined' ? options.statusTimeout : 0,
+    removeTimeout: typeof options.removeTimeout !== 'undefined' ? options.removeTimeout : 0
   };
 
   _.node = function(html) {
@@ -34,9 +35,12 @@ function minimodal(target, options) {
   };
 
   _.close = function() {
-    _.minimodal.classList.remove('minimodal--active');
+    var minimodal = _.minimodal;
+    minimodal.classList.remove('minimodal--active');
     setTimeout(function() {
-      _.minimodal.parentNode.removeChild(_.minimodal);
+      if (minimodal.parentNode) {
+        minimodal.parentNode.removeChild(minimodal);
+      }
     }, _.options.closeTimeout);
     document.removeEventListener('keydown', _.keydown);
     target.focus();
@@ -61,6 +65,14 @@ function minimodal(target, options) {
       _.focusTrap(e);
     } else if (e.keyCode === 27) {
       _.close();
+    } else if (e.keyCode === 37) {
+      if (_.index > -1) {
+        _.previous();
+      }
+    } else if (e.keyCode === 39) {
+      if (_.index > -1) {
+        _.next();
+      }
     }
   };
 
@@ -81,8 +93,11 @@ function minimodal(target, options) {
   };
 
   _.loaded = function() {
+    var status = _.status;
     setTimeout(function() {
-      _.status.parentNode.removeChild(_.status);
+      if (status.parentNode) {
+        status.parentNode.removeChild(status);
+      }
     }, _.options.statusTimeout);
     _.item.appendChild(_.content);
     _.item.classList.remove('minimodal__item--loading');
@@ -122,10 +137,17 @@ function minimodal(target, options) {
     img.src = _.url;
   };
 
-  _.load = function() {
+  _.load = function(type) {
     _.url = _.current.getAttribute('href');
     _.item = _.node('<div class="minimodal__item">');
     _.viewport.appendChild(_.item);
+    if (type) {
+      _.item.classList.add('minimodal__item--added');
+      _.item.classList.add('minimodal__item--added--' + type);
+      _.reflow();
+      _.item.classList.remove('minimodal__item--added');
+      _.item.classList.remove('minimodal__item--added--' + type);
+    }
     _.loading();
     if (_.url.indexOf('youtube.com') > -1) {
       _.youtube();
@@ -136,11 +158,68 @@ function minimodal(target, options) {
     }
   };
 
+  _.remove = function(type) {
+    var item = _.item;
+    item.classList.add('minimodal__item--removed');
+    item.classList.add('minimodal__item--removed--' + type);
+    setTimeout(function() {
+      if (item.parentNode) {
+        item.parentNode.removeChild(item);
+      }
+    }, _.options.removeTimeout);
+  };
+
+  _.update = function(type) {
+    _.remove(type);
+    _.current = _.groupItems[_.index];
+    _.load(type);
+  };
+
+  _.previous = function() {
+    if (_.index - 1 < 0) {
+      _.index = _.indexMax;
+    } else {
+      _.index -= 1;
+    }
+    _.update('previous');
+  };
+
+  _.next = function() {
+    if (_.index + 1 > _.indexMax) {
+      _.index = 0;
+    } else {
+      _.index += 1;
+    }
+    _.update('next');
+  };
+
+  _.nav = function() {
+    _.previousButton = _.node('<button class="minimodal__nav minimodal__nav--previous">Previous</button>');
+    _.nextButton = _.node('<button class="minimodal__nav minimodal__nav--next">Next</button>');
+    _.minimodal.insertBefore(_.previousButton, _.closeButton);
+    _.minimodal.insertBefore(_.nextButton, _.closeButton);
+    _.previousButton.addEventListener('click', _.previous);
+    _.nextButton.addEventListener('click', _.next);
+  };
+
+  _.group = function() {
+    _.groupID = _.current.getAttribute('data-minimodal');
+    if (_.groupID) {
+      _.groupItems = document.querySelectorAll('[data-minimodal="' + _.groupID + '"]');
+      if (_.groupItems.length > 1) {
+        _.index = Array.prototype.indexOf.call(_.groupItems, _.current);
+        _.indexMax = _.groupItems.length - 1;
+        _.nav();
+      }
+    }
+  };
+
   _.open = function() {
     _.setup();
     _.build();
     _.listen();
     _.load();
+    _.group();
   };
 
   return _;

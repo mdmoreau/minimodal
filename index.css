@@ -75,3 +75,17 @@
   top: 0;
   right: 0;
 }
+
+.minimodal__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.minimodal__nav--previous {
+  left: 0;
+}
+
+.minimodal__nav--next {
+  right: 0;
+}
