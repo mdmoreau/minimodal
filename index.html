@@ -6,6 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     <title>minimodal</title>
     <link href="index.css" rel="stylesheet">
+    <style>
+      .minimodal {
+        opacity: 0;
+        transition: all 600ms ease;
+      }
+      .minimodal--active {
+        opacity: 1;
+      }
+      .minimodal__status {
+        opacity: 0;
+        transition: all 600ms ease;
+      }
+      .minimodal--active .minimodal__item--loading .minimodal__status {
+        opacity: 1;
+      }
+      .minimodal__content {
+        opacity: 0;
+        transform: scale(0.5);
+        transition: all 600ms ease;
+      }
+      .minimodal--active .minimodal__item--loaded .minimodal__content {
+        opacity: 1;
+        transform: scale(1);
+      }
+    </style>
   </head>
   <body>
     <h1>minimodal</h1>
@@ -21,13 +46,20 @@
     <ul>
       <li><a href="https://vimeo.com/7809605" data-minimodal>vimeo</a></li>
     </ul>
+    <h2>error</h2>
+    <ul>
+      <li><a href="error.jpg" data-minimodal>error</a></li>
+    </ul>
     <script src="index.js"></script>
     <script>
       var targets = document.querySelectorAll('[data-minimodal]');
       for (var i = 0; i < targets.length; i += 1) {
         targets[i].addEventListener('click', function(e) {
           e.preventDefault();
-          var modal = minimodal(this);
+          var modal = minimodal(this, {
+            closeTimeout: 600,
+            statusTimeout: 600
+          });
           modal.open();
         });
       }

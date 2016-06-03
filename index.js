@@ -1,8 +1,15 @@
-function minimodal(target) {
+function minimodal(target, options) {
+
+  options = typeof options !== 'undefined' ? options : {};
 
   var _ = {};
 
   _.current = target;
+
+  _.options = {
+    closeTimeout: typeof options.closeTimeout !== 'undefined' ? options.closeTimeout : 0,
+    statusTimeout: typeof options.statusTimeout !== 'undefined' ? options.statusTimeout : 0
+  };
 
   _.node = function(html) {
     var div = document.createElement('div');
@@ -23,10 +30,14 @@ function minimodal(target) {
     _.minimodal.appendChild(_.closeButton);
     document.body.appendChild(_.minimodal);
     _.minimodal.focus();
+    _.minimodal.classList.add('minimodal--active');
   };
 
   _.close = function() {
-    _.minimodal.parentNode.removeChild(_.minimodal);
+    _.minimodal.classList.remove('minimodal--active');
+    setTimeout(function() {
+      _.minimodal.parentNode.removeChild(_.minimodal);
+    }, _.options.closeTimeout);
     document.removeEventListener('keydown', _.keydown);
     target.focus();
   };
@@ -58,32 +69,71 @@ function minimodal(target) {
     document.addEventListener('keydown', _.keydown);
   };
 
+  _.reflow = function() {
+    var x = _.minimodal.clientWidth;
+  };
+
+  _.loading = function() {
+    _.status = _.node('<div class="minimodal__status">Loading</div>');
+    _.item.appendChild(_.status);
+    _.reflow();
+    _.item.classList.add('minimodal__item--loading');
+  };
+
+  _.loaded = function() {
+    setTimeout(function() {
+      _.status.parentNode.removeChild(_.status);
+    }, _.options.statusTimeout);
+    _.item.appendChild(_.content);
+    _.item.classList.remove('minimodal__item--loading');
+    _.reflow();
+    _.item.classList.add('minimodal__item--loaded');
+  };
+
+  _.error = function() {
+    _.status.innerHTML = 'Error loading resource';
+  };
+
   _.youtube = function() {
     var id = _.url.split('v=')[1];
-    return '<div class="minimodal__element minimodal__element--video"><iframe class="minimodal__video" src="https://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen>';
+    _.content = _.node('<div class="minimodal__content"><div class="minimodal__element minimodal__element--video"><iframe class="minimodal__video" src="https://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen>');
+    _.loaded();
   };
 
   _.vimeo = function() {
     var id = _.url.split('vimeo.com/')[1];
-    return '<div class="minimodal__element minimodal__element--video"><iframe class="minimodal__video" src="https://player.vimeo.com/video/' + id + '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>';
+    _.content = _.node('<div class="minimodal__content"><div class="minimodal__element minimodal__element--video"><iframe class="minimodal__video" src="https://player.vimeo.com/video/' + id + '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>');
+    _.loaded();
   };
 
   _.image = function() {
-    return '<img class="minimodal__element" src="' + _.url + '">';
+    var img = document.createElement('img');
+    img.onload = function() {
+      if (img.src.indexOf(_.url) > -1) {
+        _.content = _.node('<div class="minimodal__content"><img class="minimodal__element" src="' + _.url + '">');
+        _.loaded();
+      }
+    };
+    img.onerror = function() {
+      if (img.src.indexOf(_.url) > -1) {
+        _.error();
+      }
+    };
+    img.src = _.url;
   };
 
   _.load = function() {
-    var element;
     _.url = _.current.getAttribute('href');
-    if (_.url.indexOf('youtube.com') > -1) {
-      element = _.youtube();
-    } else if (_.url.indexOf('vimeo.com') > -1) {
-      element = _.vimeo();
-    } else {
-      element = _.image();
-    }
-    _.item = _.node('<div class="minimodal__item"><div class="minimodal__content">' + element);
+    _.item = _.node('<div class="minimodal__item">');
     _.viewport.appendChild(_.item);
+    _.loading();
+    if (_.url.indexOf('youtube.com') > -1) {
+      _.youtube();
+    } else if (_.url.indexOf('vimeo.com') > -1) {
+      _.vimeo();
+    } else {
+      _.image();
+    }
   };
 
   _.open = function() {
