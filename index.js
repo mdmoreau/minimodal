@@ -19,9 +19,13 @@
     };
 
     _.options = {};
-    option('closeTimeout', 0);
+    option('loadingHTML', 'Loading');
+    option('previousButtonHTML', 'Previous');
+    option('nextButtonHTML', 'Next');
+    option('closeButtonHTML', 'Close');
     option('statusTimeout', 0);
     option('removeTimeout', 0);
+    option('closeTimeout', 0);
 
     _.node = function(html) {
       var div = document.createElement('div');
@@ -34,7 +38,7 @@
       _.minimodal = _.node('<div class="minimodal" tabindex="0">');
       _.overlay = _.node('<div class="minimodal__overlay">');
       _.viewport = _.node('<div class="minimodal__viewport">');
-      _.closeButton = _.node('<button class="minimodal__close">Close</button>');
+      _.closeButton = _.node('<button class="minimodal__close">' + _.options.closeButtonHTML + '</button>');
     };
 
     _.build = function() {
@@ -98,7 +102,7 @@
     };
 
     _.loading = function() {
-      _.status = _.node('<div class="minimodal__status">Loading</div>');
+      _.status = _.node('<div class="minimodal__status">' + _.options.loadingHTML + '</div>');
       _.item.appendChild(_.status);
       _.reflow();
       _.item.classList.add('minimodal__item--loading');
@@ -206,8 +210,8 @@
     };
 
     _.nav = function() {
-      _.previousButton = _.node('<button class="minimodal__nav minimodal__nav--previous">Previous</button>');
-      _.nextButton = _.node('<button class="minimodal__nav minimodal__nav--next">Next</button>');
+      _.previousButton = _.node('<button class="minimodal__nav minimodal__nav--previous">' + _.options.previousButtonHTML + '</button>');
+      _.nextButton = _.node('<button class="minimodal__nav minimodal__nav--next">' + _.options.nextButtonHTML + '</button>');
       _.minimodal.insertBefore(_.previousButton, _.closeButton);
       _.minimodal.insertBefore(_.nextButton, _.closeButton);
       _.previousButton.addEventListener('click', _.previous);

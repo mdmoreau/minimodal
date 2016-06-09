@@ -99,9 +99,9 @@
       var targets = document.querySelectorAll('[data-minimodal]');
       for (var i = 0; i < targets.length; i += 1) {
         var modal = minimodal(targets[i], {
-          closeTimeout: 600,
           statusTimeout: 600,
-          removeTimeout: 600
+          removeTimeout: 600,
+          closeTimeout: 600
         });
         modal.init();
       }
