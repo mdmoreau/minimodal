@@ -14,8 +14,6 @@
 
     var _ = {};
 
-    _.current = target;
-
     _.options = {
       closeTimeout: typeof options.closeTimeout !== 'undefined' ? options.closeTimeout : 0,
       statusTimeout: typeof options.statusTimeout !== 'undefined' ? options.statusTimeout : 0,
@@ -29,6 +27,7 @@
     };
 
     _.setup = function() {
+      _.current = target;
       _.minimodal = _.node('<div class="minimodal" tabindex="0">');
       _.overlay = _.node('<div class="minimodal__overlay">');
       _.viewport = _.node('<div class="minimodal__viewport">');
