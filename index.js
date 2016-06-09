@@ -14,11 +14,14 @@
 
     var _ = {};
 
-    _.options = {
-      closeTimeout: typeof options.closeTimeout !== 'undefined' ? options.closeTimeout : 0,
-      statusTimeout: typeof options.statusTimeout !== 'undefined' ? options.statusTimeout : 0,
-      removeTimeout: typeof options.removeTimeout !== 'undefined' ? options.removeTimeout : 0
+    var option = function(property, value) {
+      _.options[property] = typeof options[property] !== 'undefined' ? options[property] : value;
     };
+
+    _.options = {};
+    option('closeTimeout', 0);
+    option('statusTimeout', 0);
+    option('removeTimeout', 0);
 
     _.node = function(html) {
       var div = document.createElement('div');
