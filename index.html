@@ -88,15 +88,12 @@
     <script>
       var targets = document.querySelectorAll('[data-minimodal]');
       for (var i = 0; i < targets.length; i += 1) {
-        targets[i].addEventListener('click', function(e) {
-          e.preventDefault();
-          var modal = minimodal(this, {
-            closeTimeout: 600,
-            statusTimeout: 600,
-            removeTimeout: 600
-          });
-          modal.open();
+        var modal = minimodal(targets[i], {
+          closeTimeout: 600,
+          statusTimeout: 600,
+          removeTimeout: 600
         });
+        modal.init();
       }
     </script>
   </body>

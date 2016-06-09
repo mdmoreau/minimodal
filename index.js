@@ -224,12 +224,17 @@
       }
     };
 
-    _.open = function() {
+    _.open = function(e) {
+      e.preventDefault();
       _.setup();
       _.build();
       _.listen();
       _.load();
       _.group();
+    };
+
+    _.init = function() {
+      target.addEventListener('click', _.open);
     };
 
     return _;
