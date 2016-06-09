@@ -52,10 +52,14 @@
       .minimodal__item--removed--previous {
         transform: translateX(100%) scale(0.5);
       }
+      /* hidden */
+      .hidden {
+        display: none;
+      }
     </style>
   </head>
   <body>
-    <h1>minimodal</h1>
+    <h1>minimodal / <a href="https://github.com/mdmoreau/minimodal">github</a></h1>
     <h2>image</h2>
     <ul>
       <li><a href="https://placehold.it/600" data-minimodal>image</a></li>
@@ -74,11 +78,17 @@
       <li><a href="https://placehold.it/600/aaa?text=1-2" data-minimodal="1">image</a></li>
       <li><a href="https://placehold.it/600/eee?text=1-3" data-minimodal="1">image</a></li>
     </ul>
-    <h2>group 2</h2>
+    <h2>group 2 (mixed content types)</h2>
     <ul>
       <li><a href="https://placehold.it/600?text=2-1" data-minimodal="2">image</a></li>
       <li><a href="https://www.youtube.com/watch?v=Cp-Ys_iFwnM" data-minimodal="2">youtube</a></li>
       <li><a href="https://vimeo.com/7809605" data-minimodal="2">vimeo</a></li>
+    </ul>
+    <h2>group 3 (one entry item, others hidden)</h2>
+    <ul>
+      <li><a href="https://placehold.it/600?text=3-1" data-minimodal="3">image</a></li>
+      <li class="hidden"><a href="https://placehold.it/600/aaa?text=3-2" data-minimodal="3">image</a></li>
+      <li class="hidden"><a href="https://placehold.it/600/eee?text=3-3" data-minimodal="3">image</a></li>
     </ul>
     <h2>error</h2>
     <ul>
