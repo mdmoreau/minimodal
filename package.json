@@ -2,11 +2,11 @@
   "name": "minimodal",
   "version": "0.1.0",
   "description": "Minimal, customizable, responsive modals",
-  "main": "index.js",
-  "style": "index.css",
+  "main": "minimodal.js",
+  "style": "minimodal.css",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "browser-sync start -s -f 'index.html' 'index.css' 'index.js'"
+    "dev": "browser-sync start -s -f 'index.html' 'minimodal.css' 'minimodal.js'"
   },
   "repository": {
     "type": "git",
