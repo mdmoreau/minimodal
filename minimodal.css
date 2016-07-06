@@ -51,6 +51,10 @@
   transform: translateY(-50%);
 }
 
+.minimodal__element--map {
+  background: white;
+}
+
 .minimodal__element--video {
   max-width: calc(100vh * (16/9));
 }

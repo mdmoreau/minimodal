@@ -125,6 +125,24 @@
       _.status.innerHTML = 'Error loading resource';
     };
 
+    _.googleMaps = function() {
+      var src = 'https://www.google.com/maps/embed/v1/';
+      var apiKey = 'AIzaSyDqlCMWHw2THOOYiVkO8-PjkPTTAIpkxww';
+      if (_.url.indexOf('/maps/place/') > -1) {
+        var place = _.url.match('(?:/maps/place/)([^/]+)')[1];
+        src += 'place?key=' + apiKey + '&q=' + place;
+      } else {
+        var coords = _.url.match('(?:/maps/@)([^z]+)')[1];
+        coords = coords.split(',');
+        var lat = coords[0];
+        var long = coords[1];
+        var zoom = coords[2];
+        src += 'view?key=' + apiKey + '&center=' + lat + ',' + long + '&zoom=' + zoom + 'z';
+      }
+      _.content = _.node('<div class="minimodal__content"><iframe class="minimodal__element minimodal__element--map" src="' + src + '" frameborder="0">');
+      _.loaded();
+    };
+
     _.youtube = function() {
       var id = _.url.split('v=')[1];
       _.content = _.node('<div class="minimodal__content"><div class="minimodal__element minimodal__element--video"><iframe class="minimodal__video" src="https://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen>');
@@ -153,31 +171,37 @@
       img.src = _.url;
     };
 
-    _.load = function(type) {
-      _.url = _.current.getAttribute('href');
-      _.item = _.node('<div class="minimodal__item">');
-      _.viewport.appendChild(_.item);
-      if (type) {
-        _.item.classList.add('minimodal__item--added');
-        _.item.classList.add('minimodal__item--added--' + type);
-        _.reflow();
-        _.item.classList.remove('minimodal__item--added');
-        _.item.classList.remove('minimodal__item--added--' + type);
-      }
-      _.loading();
-      if (_.url.indexOf('youtube.com') > -1) {
-        _.youtube();
+    _.type = function() {
+      if (_.url.indexOf('google.com/maps') > -1) {
+        return 'googleMaps';
+      } else if (_.url.indexOf('youtube.com') > -1) {
+        return 'youtube';
       } else if (_.url.indexOf('vimeo.com') > -1) {
-        _.vimeo();
+        return 'vimeo';
       } else {
-        _.image();
+        return 'image';
       }
     };
 
-    _.remove = function(type) {
+    _.load = function(change) {
+      _.url = _.current.getAttribute('href');
+      _.item = _.node('<div class="minimodal__item">');
+      _.viewport.appendChild(_.item);
+      if (change) {
+        _.item.classList.add('minimodal__item--added');
+        _.item.classList.add('minimodal__item--added--' + change);
+        _.reflow();
+        _.item.classList.remove('minimodal__item--added');
+        _.item.classList.remove('minimodal__item--added--' + change);
+      }
+      _.loading();
+      _[_.type()]();
+    };
+
+    _.remove = function(change) {
       var item = _.item;
       item.classList.add('minimodal__item--removed');
-      item.classList.add('minimodal__item--removed--' + type);
+      item.classList.add('minimodal__item--removed--' + change);
       setTimeout(function() {
         if (item.parentNode) {
           item.parentNode.removeChild(item);
@@ -185,10 +209,10 @@
       }, _.options.removeTimeout);
     };
 
-    _.update = function(type) {
-      _.remove(type);
+    _.update = function(change) {
+      _.remove(change);
       _.current = _.groupItems[_.index];
-      _.load(type);
+      _.load(change);
     };
 
     _.previous = function() {
