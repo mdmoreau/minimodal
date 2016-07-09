@@ -125,6 +125,29 @@
       _.status.innerHTML = 'Error loading resource';
     };
 
+    _.ajax = function() {
+      var url = _.url;
+      var request = new XMLHttpRequest();
+      request.open('GET', url, true);
+      request.onload = function() {
+        if (url === _.url) {
+          if (request.status >= 200 && request.status < 400) {
+            var response = request.responseText;
+            _.content = _.node('<div class="minimodal__content"><div class="minimodal__element">' + response);
+            _.loaded();
+          } else {
+            _.error();
+          }
+        }
+      };
+      request.onerror = function() {
+        if (url === _.url) {
+          _.error();
+        }
+      };
+      request.send();
+    };
+
     _.googleMaps = function() {
       var src = 'https://www.google.com/maps/embed/v1/';
       var apiKey = 'AIzaSyDqlCMWHw2THOOYiVkO8-PjkPTTAIpkxww';
@@ -156,23 +179,26 @@
     };
 
     _.image = function() {
+      var url = _.url;
       var img = document.createElement('img');
       img.onload = function() {
-        if (img.src.indexOf(_.url) > -1) {
+        if (url === _.url) {
           _.content = _.node('<div class="minimodal__content"><img class="minimodal__element" src="' + _.url + '">');
           _.loaded();
         }
       };
       img.onerror = function() {
-        if (img.src.indexOf(_.url) > -1) {
+        if (url === _.url) {
           _.error();
         }
       };
-      img.src = _.url;
+      img.src = url;
     };
 
     _.type = function() {
-      if (_.url.indexOf('google.com/maps') > -1) {
+      if (_.current.getAttribute('data-minimodal-type')) {
+        return _.current.getAttribute('data-minimodal-type');
+      } else if (_.url.indexOf('google.com/maps') > -1) {
         return 'googleMaps';
       } else if (_.url.indexOf('youtube.com') > -1) {
         return 'youtube';
