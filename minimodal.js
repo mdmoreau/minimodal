@@ -26,6 +26,7 @@
     option('statusTimeout', 0);
     option('removeTimeout', 0);
     option('closeTimeout', 0);
+    option('googleMapsAPIKey', '');
 
     _.node = function(html) {
       var div = document.createElement('div');
@@ -154,7 +155,7 @@
 
     _.googleMaps = function() {
       var src = 'https://www.google.com/maps/embed/v1/';
-      var apiKey = 'AIzaSyDqlCMWHw2THOOYiVkO8-PjkPTTAIpkxww';
+      var apiKey = _.options.googleMapsAPIKey;
       if (_.url.indexOf('/maps/place/') > -1) {
         var place = _.url.match('(?:/maps/place/)([^/]+)')[1];
         src += 'place?key=' + apiKey + '&q=' + place;
