@@ -116,6 +116,10 @@
         }
       }, _.options.statusTimeout);
       _.item.appendChild(_.content);
+      if (_.current.getAttribute('title')) {
+        _.caption = _.node('<div class="minimodal__caption">' + _.current.getAttribute('title'));
+        _.item.appendChild(_.caption);
+      }
       _.item.classList.remove('minimodal__item--loading');
       _.reflow();
       _.item.classList.add('minimodal__item--loaded');
