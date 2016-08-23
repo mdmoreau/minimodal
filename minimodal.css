@@ -8,10 +8,10 @@
 
 .minimodal__overlay {
   position: absolute;
-  top: 0;
+  top: -8rem;
   left: 0;
   width: 100%;
-  height: calc(100% + 8rem);
+  height: calc(100% + 16rem);
   background: rgba(0, 0, 0, 0.9);
 }
 
