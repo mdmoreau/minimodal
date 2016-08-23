@@ -94,6 +94,7 @@
     };
 
     _.listen = function() {
+      _.overlay.addEventListener('click', _.close);
       _.closeButton.addEventListener('click', _.close);
       document.addEventListener('keydown', _.keydown);
     };

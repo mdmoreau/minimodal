@@ -14,6 +14,7 @@ Examples available at https://mdmoreau.github.io/minimodal/
 - Built-in support for a variety of content types
 - Ability to group and navigate between items
 - Works in IE 10+ (requires [classList](http://caniuse.com/#search=classlist) support)
+    - Close on overlay click uses CSS pointer-events and only works in IE 11+
 
 ## Install
 

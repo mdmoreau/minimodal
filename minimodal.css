@@ -18,6 +18,7 @@
 .minimodal__viewport {
   position: relative;
   height: 100%;
+  pointer-events: none;
 }
 
 .minimodal__item {
@@ -49,6 +50,7 @@
   max-height: 100%;
   margin: auto;
   transform: translateY(-50%);
+  pointer-events: auto;
 }
 
 .minimodal__element--map {
@@ -80,6 +82,7 @@
   bottom: 0;
   left: 0;
   color: white;
+  pointer-events: auto;
 }
 
 .minimodal__close {
