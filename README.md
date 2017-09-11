@@ -90,6 +90,16 @@ Most content types will be automatically detected based on the item's href attri
 
 ## Options
 
+### Classes
+
+Additional classes can be added to minimodal elements. This allows different styling of a modal depending on its context.
+
+`rootClass`
+
+default: ''
+
+Added to the root `minimodal` element.
+
 ### Markup
 
 Markup for the following elements can be customized when initializing minimodal. Any customizations will be added inside each element's container.

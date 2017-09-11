@@ -19,6 +19,7 @@
     };
 
     _.options = {};
+    option('rootClass', '');
     option('loadingHTML', 'Loading');
     option('previousButtonHTML', 'Previous');
     option('nextButtonHTML', 'Next');
@@ -36,7 +37,7 @@
 
     _.setup = function() {
       _.current = target;
-      _.minimodal = _.node('<div class="minimodal" tabindex="0">');
+      _.minimodal = _.node('<div class="minimodal ' + _.options.rootClass + '" tabindex="0">');
       _.overlay = _.node('<div class="minimodal__overlay">');
       _.viewport = _.node('<div class="minimodal__viewport">');
       _.closeButton = _.node('<button class="minimodal__close">' + _.options.closeButtonHTML + '</button>');
