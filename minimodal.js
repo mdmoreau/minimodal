@@ -154,6 +154,13 @@
       request.send();
     };
 
+    _.selector = function() {
+      var selector = _.current.getAttribute('data-minimodal-selector');
+      var html = document.querySelector(selector).innerHTML;
+      _.content = _.node('<div class="minimodal__content"><div class="minimodal__element">' + html);
+      _.loaded();
+    };
+
     _.googleMaps = function() {
       var src = 'https://www.google.com/maps/embed/v1/';
       var apiKey = _.options.googleMapsAPIKey;
@@ -204,6 +211,8 @@
     _.type = function() {
       if (_.current.getAttribute('data-minimodal-type')) {
         return _.current.getAttribute('data-minimodal-type');
+      } else if (_.current.getAttribute('data-minimodal-selector')) {
+        return 'selector';
       } else if (_.url.indexOf('google.com/maps') > -1) {
         return 'googleMaps';
       } else if (_.url.indexOf('youtube.com') > -1) {

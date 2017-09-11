@@ -103,10 +103,17 @@
     <ul>
       <li><a href="ajax.html" data-minimodal data-minimodal-type="ajax">html file</a></li>
     </ul>
+    <h2>selector</h2>
+    <ul>
+      <li><a href="#fallback-url" data-minimodal data-minimodal-selector="#demo">#demo</a></li>
+    </ul>
     <h2>error</h2>
     <ul>
       <li><a href="error.jpg" data-minimodal>error</a></li>
     </ul>
+    <div id="demo" style="display: none;">
+      <div style="width: 12rem; max-width: calc(100% - 4rem); margin: auto; padding: 2rem; background: white; text-align: center;">#demo content</div>
+    </div>
     <script src="minimodal.js"></script>
     <script>
       var targets = document.querySelectorAll('[data-minimodal]');
