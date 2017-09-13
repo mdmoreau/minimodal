@@ -162,6 +162,11 @@
       _.loaded();
     };
 
+    _.iframe = function() {
+      _.content = _.node('<div class="minimodal__content"><div class="minimodal__element minimodal__element--iframe"><iframe class="minimodal__iframe" src="' + _.url + '" frameborder="0">');
+      _.loaded();
+    };
+
     _.googleMaps = function() {
       var src = 'https://www.google.com/maps/embed/v1/';
       var apiKey = _.options.googleMapsAPIKey;

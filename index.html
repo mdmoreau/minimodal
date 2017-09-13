@@ -60,6 +60,23 @@
       .hidden {
         display: none;
       }
+      /* iframe - styled for video */
+      .minimodal__element--iframe {
+        max-width: calc(100vh * (16/9));
+      }
+      .minimodal__element--iframe::before {
+        display: block;
+        padding-bottom: 56.25%;
+        background: black;
+        content: '';
+      }
+      .minimodal__iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
     </style>
   </head>
   <body>
@@ -106,6 +123,10 @@
     <h2>selector</h2>
     <ul>
       <li><a href="#fallback-url" data-minimodal data-minimodal-selector="#demo">#demo</a></li>
+    </ul>
+    <h2>iframe</h2>
+    <ul>
+      <li><a href="http://fast.wistia.net/embed/iframe/lyrt57dn27" data-minimodal data-minimodal-type="iframe">iframe - styled for video</a></li>
     </ul>
     <h2>error</h2>
     <ul>

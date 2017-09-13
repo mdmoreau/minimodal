@@ -87,6 +87,8 @@ Most content types will be automatically detected based on the item's href attri
 - Selector
   - requires `data-minimodal-selector="#selector"` on target item
     - `#selector` can be any valid CSS selector
+- Iframe
+  - requires `data-minimodal-type="iframe"` on target item
 
 ## Options
 
