@@ -27,6 +27,7 @@
     option('statusTimeout', 0);
     option('removeTimeout', 0);
     option('closeTimeout', 0);
+    option('onLoaded', function() {});
     option('googleMapsAPIKey', '');
 
     _.node = function(html) {
@@ -126,6 +127,7 @@
       _.item.classList.remove('minimodal__item--loading');
       _.reflow();
       _.item.classList.add('minimodal__item--loaded');
+      _.options.onLoaded(_.type());
     };
 
     _.error = function() {

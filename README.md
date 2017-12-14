@@ -144,6 +144,14 @@ default: 0
 
 Delay before the root `minimodal` is removed from the DOM when clicking the close button.
 
+### Callbacks
+
+`onLoaded`
+
+default: `function() {}`
+
+Called whenever an item is finished loading. The content type of the item is passed through as an argument.
+
 ### Other
 
 `googleMapsAPIKey`
