@@ -38,7 +38,7 @@
 
     _.setup = function() {
       _.current = target;
-      _.minimodal = _.node('<div class="minimodal ' + _.options.rootClass + '" tabindex="0">');
+      _.minimodal = _.node('<div class="minimodal ' + _.options.rootClass + '" tabindex="0" role="dialog">');
       _.overlay = _.node('<div class="minimodal__overlay">');
       _.viewport = _.node('<div class="minimodal__viewport">');
       _.closeButton = _.node('<button class="minimodal__close">' + _.options.closeButtonHTML + '</button>');
