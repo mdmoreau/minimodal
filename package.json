@@ -25,6 +25,6 @@
   },
   "homepage": "https://github.com/mdmoreau/minimodal#readme",
   "devDependencies": {
-    "browser-sync": "^2.23.6"
+    "browser-sync": "^2.24.4"
   }
 }
