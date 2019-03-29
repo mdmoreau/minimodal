@@ -307,9 +307,9 @@
       e.preventDefault();
       _.setup();
       _.build();
+      _.group();
       _.listen();
       _.load();
-      _.group();
     };
 
     _.init = function() {
