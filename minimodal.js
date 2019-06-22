@@ -189,6 +189,7 @@
 
     _.youtube = function() {
       var id = _.url.split('v=')[1];
+      id = id.replace('&', '?');
       _.content = _.node('<div class="minimodal__content"><div class="minimodal__element minimodal__element--video"><iframe class="minimodal__video" src="https://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen>');
       _.loaded();
     };
