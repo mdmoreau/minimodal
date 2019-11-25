@@ -152,6 +152,18 @@ default: `function() {}`
 
 Called whenever an item is finished loading. The content type of the item is passed through as an argument.
 
+`onOpen`
+
+default: `function() {}`
+
+Called whenever the root `minimodal` is added to the DOM.
+
+`onClose`
+
+default: `function() {}`
+
+Called whenever the root `minimodal` is removed from the DOM.
+
 ### Other
 
 `googleMapsAPIKey`

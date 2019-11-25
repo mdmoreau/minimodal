@@ -28,6 +28,8 @@
     option('removeTimeout', 0);
     option('closeTimeout', 0);
     option('onLoaded', function() {});
+    option('onOpen', function() {});
+    option('onClose', function() {});
     option('googleMapsAPIKey', '');
 
     _.node = function(html) {
@@ -51,6 +53,7 @@
       document.body.appendChild(_.minimodal);
       _.minimodal.focus();
       _.minimodal.classList.add('minimodal--active');
+      _.options.onOpen();
     };
 
     _.close = function() {
@@ -59,6 +62,7 @@
       setTimeout(function() {
         if (minimodal.parentNode) {
           minimodal.parentNode.removeChild(minimodal);
+          _.options.onClose();
         }
       }, _.options.closeTimeout);
       document.removeEventListener('keydown', _.keydown);
