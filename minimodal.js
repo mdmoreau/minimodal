@@ -61,6 +61,9 @@
       minimodal.classList.remove('minimodal--active');
       setTimeout(function() {
         if (minimodal.parentNode) {
+          if (_.selectorElement) {
+            _.selectorElement.appendChild(_.selectorChild);
+          }
           minimodal.parentNode.removeChild(minimodal);
           _.options.onClose();
         }
@@ -162,9 +165,8 @@
     };
 
     _.selector = function() {
-      var selector = _.current.getAttribute('data-minimodal-selector');
-      var html = document.querySelector(selector).innerHTML;
-      _.content = _.node('<div class="minimodal__content"><div class="minimodal__element">' + html);
+      _.content = _.node('<div class="minimodal__content"><div class="minimodal__element">');
+      _.content.querySelector('.minimodal__element').appendChild(_.selectorChild);
       _.loaded();
     };
 
@@ -239,6 +241,8 @@
 
     _.load = function(change) {
       _.url = _.current.getAttribute('href');
+      _.selectorElement = document.querySelector(_.current.getAttribute('data-minimodal-selector'));
+      _.selectorChild = _.selectorElement ? _.selectorElement.firstElementChild : null;
       _.item = _.node('<div class="minimodal__item">');
       _.viewport.appendChild(_.item);
       if (change) {
@@ -254,10 +258,15 @@
 
     _.remove = function(change) {
       var item = _.item;
+      var selectorElement = _.selectorElement;
+      var selectorChild = _.selectorChild;
       item.classList.add('minimodal__item--removed');
       item.classList.add('minimodal__item--removed--' + change);
       setTimeout(function() {
         if (item.parentNode) {
+          if (selectorElement) {
+            selectorElement.appendChild(selectorChild);
+          }
           item.parentNode.removeChild(item);
         }
       }, _.options.removeTimeout);
