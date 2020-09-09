@@ -273,27 +273,35 @@
     };
 
     _.update = function(change) {
+      _.updating = true;
       _.remove(change);
       _.current = _.groupItems[_.index];
       _.load(change);
+      setTimeout(function() {
+        _.updating = false;
+      }, _.options.removeTimeout);
     };
 
     _.previous = function() {
-      if (_.index - 1 < 0) {
-        _.index = _.indexMax;
-      } else {
-        _.index -= 1;
+      if (!_.updating) {
+        if (_.index - 1 < 0) {
+          _.index = _.indexMax;
+        } else {
+          _.index -= 1;
+        }
+        _.update('previous');
       }
-      _.update('previous');
     };
 
     _.next = function() {
-      if (_.index + 1 > _.indexMax) {
-        _.index = 0;
-      } else {
-        _.index += 1;
+      if (!_.updating) {
+        if (_.index + 1 > _.indexMax) {
+          _.index = 0;
+        } else {
+          _.index += 1;
+        }
+        _.update('next');
       }
-      _.update('next');
     };
 
     _.nav = function() {
