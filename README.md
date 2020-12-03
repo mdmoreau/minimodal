@@ -214,10 +214,10 @@ Modifier class that is added to an item when it is removed via the next button.
 
 ## Captions
 
-Use the `title` attribute on your target links to have the contained content appear as a caption. Links and other HTML can be used here as needed.
+Use the `data-minimodal-caption` attribute on your target links to have the contained content appear as a caption. Links and other HTML can be used here as needed.
 
 ```html
-<a href="image.jpg" title="My caption. <a href='#'>source</a>" data-minimodal>image</a>
+<a href="image.jpg" data-minimodal data-minimodal-caption="My caption. <a href='#'>source</a>">image</a>
 ```
 
 ## Groups
@@ -241,4 +241,20 @@ Targets don't need to be visible on the page to be grouped, so you could have on
 <a href="image1.jpg" data-minimodal="group1">image</a>
 <a href="image2.jpg" data-minimodal="group1" style="display: none;">image</a>
 <a href="image3.jpg" data-minimodal="group1" style="display: none;">image</a>
+```
+
+## Attribute Passthrough
+
+Certain attributes can be passed from a target link to its corresponding item markup.
+
+- `data-minimodal-alt`
+  - Image
+- `data-minimodal-title`
+  - YouTube
+  - Vimeo
+  - Google Maps
+  - Iframe
+
+```html
+<a href="image.jpg" data-minimodal data-minimodal-alt="descriptive text">image</a>
 ```

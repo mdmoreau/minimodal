@@ -127,8 +127,8 @@
         }
       }, _.options.statusTimeout);
       _.item.appendChild(_.content);
-      if (_.current.getAttribute('title')) {
-        _.caption = _.node('<div class="minimodal__caption">' + _.current.getAttribute('title'));
+      if (_.current.getAttribute('data-minimodal-caption')) {
+        _.caption = _.node('<div class="minimodal__caption">' + _.current.getAttribute('data-minimodal-caption'));
         _.item.appendChild(_.caption);
       }
       _.item.classList.remove('minimodal__item--loading');
@@ -139,6 +139,14 @@
 
     _.error = function() {
       _.status.innerHTML = 'Error loading resource';
+    };
+
+    _.attribute = function(name) {
+      var html = '';
+      if (_.current.getAttribute('data-minimodal-' + name)) {
+        html = name + '="' + _.current.getAttribute('data-minimodal-' + name) + '"';
+      }
+      return html;
     };
 
     _.ajax = function() {
@@ -171,11 +179,13 @@
     };
 
     _.iframe = function() {
-      _.content = _.node('<div class="minimodal__content"><div class="minimodal__element minimodal__element--iframe"><iframe class="minimodal__iframe" src="' + _.url + '" frameborder="0">');
+      var title = _.attribute('title');
+      _.content = _.node('<div class="minimodal__content"><div class="minimodal__element minimodal__element--iframe"><iframe ' + title + ' class="minimodal__iframe" src="' + _.url + '" frameborder="0">');
       _.loaded();
     };
 
     _.googleMaps = function() {
+      var title = _.attribute('title');
       var src = 'https://www.google.com/maps/embed/v1/';
       var apiKey = _.options.googleMapsAPIKey;
       if (_.url.indexOf('/maps/place/') > -1) {
@@ -189,29 +199,32 @@
         var zoom = coords[2];
         src += 'view?key=' + apiKey + '&center=' + lat + ',' + long + '&zoom=' + zoom + 'z';
       }
-      _.content = _.node('<div class="minimodal__content"><iframe class="minimodal__element minimodal__element--map" src="' + src + '" frameborder="0">');
+      _.content = _.node('<div class="minimodal__content"><iframe ' + title + ' class="minimodal__element minimodal__element--map" src="' + src + '" frameborder="0">');
       _.loaded();
     };
 
     _.youtube = function() {
+      var title = _.attribute('title');
       var id = _.url.split('v=')[1];
       id = id.replace('&', '?');
-      _.content = _.node('<div class="minimodal__content"><div class="minimodal__element minimodal__element--video"><iframe class="minimodal__video" src="https://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen>');
+      _.content = _.node('<div class="minimodal__content"><div class="minimodal__element minimodal__element--video"><iframe ' + title + ' class="minimodal__video" src="https://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen>');
       _.loaded();
     };
 
     _.vimeo = function() {
+      var title = _.attribute('title');
       var id = _.url.split('vimeo.com/')[1];
-      _.content = _.node('<div class="minimodal__content"><div class="minimodal__element minimodal__element--video"><iframe class="minimodal__video" src="https://player.vimeo.com/video/' + id + '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>');
+      _.content = _.node('<div class="minimodal__content"><div class="minimodal__element minimodal__element--video"><iframe ' + title + ' class="minimodal__video" src="https://player.vimeo.com/video/' + id + '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>');
       _.loaded();
     };
 
     _.image = function() {
+      var alt = _.attribute('alt');
       var url = _.url;
       var img = document.createElement('img');
       img.onload = function() {
         if (url === _.url) {
-          _.content = _.node('<div class="minimodal__content"><img class="minimodal__element" src="' + _.url + '">');
+          _.content = _.node('<div class="minimodal__content"><img ' + alt + ' class="minimodal__element" src="' + _.url + '">');
           _.loaded();
         }
       };
