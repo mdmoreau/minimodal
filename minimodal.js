@@ -12,6 +12,8 @@
 
     options = typeof options !== 'undefined' ? options : {};
 
+    var root = document.documentElement;
+
     var _ = {};
 
     var option = function(property, value) {
@@ -54,6 +56,7 @@
       _.minimodal.focus();
       _.minimodal.classList.add('minimodal--active');
       _.options.onOpen();
+      root.setAttribute('data-minimodal-active', '');
     };
 
     _.close = function() {
@@ -66,6 +69,7 @@
           }
           minimodal.parentNode.removeChild(minimodal);
           _.options.onClose();
+          root.removeAttribute('data-minimodal-active');
         }
       }, _.options.closeTimeout);
       document.removeEventListener('keydown', _.keydown);
