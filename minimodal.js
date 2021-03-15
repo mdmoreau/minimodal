@@ -209,8 +209,13 @@
 
     _.youtube = function() {
       var title = _.attribute('title');
-      var id = _.url.split('v=')[1];
-      id = id.replace('&', '?');
+      if (_.url.indexOf('youtube.com') > -1) {
+        var id = _.url.split('v=')[1];
+        id = id.replace('&', '?');
+      }
+      if (_.url.indexOf('youtu.be') > -1) {
+        var id = _.url.split('youtu.be/')[1];
+      }
       _.content = _.node('<div class="minimodal__content"><div class="minimodal__element minimodal__element--video"><iframe ' + title + ' class="minimodal__video" src="https://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen>');
       _.loaded();
     };
@@ -247,7 +252,7 @@
         return 'selector';
       } else if (_.url.indexOf('google.com/maps') > -1) {
         return 'googleMaps';
-      } else if (_.url.indexOf('youtube.com') > -1) {
+      } else if (_.url.indexOf('youtube.com') > -1 || _.url.indexOf('youtu.be') > -1) {
         return 'youtube';
       } else if (_.url.indexOf('vimeo.com') > -1) {
         return 'vimeo';
