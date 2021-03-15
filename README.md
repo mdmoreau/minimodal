@@ -74,7 +74,7 @@ Most content types will be automatically detected based on the item's href attri
 - Image
   - default fallback if no other type is specified or detected
 - YouTube
-  - use `https://www.youtube.com/watch?v=xxxxxxxxxxx` format
+  - use `https://www.youtube.com/watch?v=xxxxxxxxxxx` or `https://youtu.be/xxxxxxxxxxx` format
 - Vimeo
   - use `https://vimeo.com/xxxxxxx` format
 - Google Maps
