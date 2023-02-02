@@ -1,6 +1,6 @@
 {
   "name": "minimodal",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Minimal, customizable, responsive modals",
   "main": "minimodal.js",
   "style": "minimodal.css",
